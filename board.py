@@ -4,5 +4,4 @@ class Board():
         self.height = height
         self.widith = width
 
-        self.board = [[None for i in range(width)] for j in range(height)]
-        print(self.board)
+        self.board = [[0 for i in range(width)] for j in range(height)]
