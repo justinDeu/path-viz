@@ -49,8 +49,16 @@ class PathUI():
         if event.type == pg.QUIT:
             self._running = False
             return
-
-        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+        elif event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            for row in self.rects:
+                for item in row:
+                    rect = item[0]
+                    if rect.collidepoint(event.pos):
+                        item[1] = ACTIVE_CELL_COLOR
+                        self.render()
+                        return
+            return
+        elif event.type == pg.MOUSEMOTION and pg.mouse.get_pressed()[0]:
             for row in self.rects:
                 for item in row:
                     rect = item[0]
