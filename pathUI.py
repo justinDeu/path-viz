@@ -7,12 +7,14 @@ BLACK = (0, 0, 0)
 BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
+ORANGE = (255, 165, 0)
 
 COLORS = {
     0: WHITE,
     1: GREEN,
     2: BLUE,
-    3: RED
+    3: RED,
+    4: ORANGE
 }
 
 BACKGROUND_COLOR = BLACK
@@ -28,8 +30,6 @@ class PathUI():
         self.width = width
         self.height = height
         self.cell_size = cell_size
-
-        self.motion_count = 0;
 
         self._running = True
         self._display_surf = pg.display.set_mode((self.width, self.height), pg.HWSURFACE)
