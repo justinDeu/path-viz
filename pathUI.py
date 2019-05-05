@@ -119,8 +119,11 @@ class PathUI():
         self.on_cleanup()
 
     def draw_button(self, txt, location, size=(80, 50)):
+        text = pg.font.SysFont('Arial', 15)
+        txt_surf = text.render(txt, False, BLACK)
         self.button = pg.Rect(location[0], location[1], size[0], size[1])
         pg.draw.rect(self._display_surf, RED, self.button)
+        self._display_surf.blit(txt_surf, location)
 
 
 class Button():
