@@ -25,9 +25,6 @@ ACTIVE_CELL_COLOR = GREEN
 
 MARGIN = 5
 
-def button_clicked():
-    print("Clicked button")
-
 class PathUI():
 
     def __init__(self, board, width, height, cell_size):
@@ -71,6 +68,9 @@ class PathUI():
             return
         elif event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 1:
+                if self.run_button.collidepoint(event.pos):
+                    self.run_button_clicked()
+                    return
                 for i, row in enumerate(self.rects):
                     for j, rect in enumerate(row):
                         if rect.collidepoint(event.pos):
@@ -105,7 +105,7 @@ class PathUI():
             pg.Rect(0, 0, (len(self.board.board) * (self.cell_size + MARGIN)) + MARGIN, 
                 (len(self.board.board[0]) * (self.cell_size + MARGIN)) + MARGIN))
         self.draw_grid()
-        self.draw_button("Find Path", (self.width+200, self.height // 2))
+        self.draw_button("Run Search", (self.width+200, self.height // 2))
         pg.display.flip()
 
     def on_cleanup(self):
@@ -121,9 +121,12 @@ class PathUI():
     def draw_button(self, txt, location, size=(80, 50)):
         text = pg.font.SysFont('Arial', 15)
         txt_surf = text.render(txt, False, BLACK)
-        self.button = pg.Rect(location[0], location[1], size[0], size[1])
-        pg.draw.rect(self._display_surf, RED, self.button)
+        self.run_button = pg.Rect(location[0], location[1], size[0], size[1])
+        pg.draw.rect(self._display_surf, RED, self.run_button)
         self._display_surf.blit(txt_surf, location)
+    
+    def run_button_clicked(self):
+        print("Searching for path.....")
 
 
 class Button():
