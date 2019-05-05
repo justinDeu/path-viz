@@ -4,6 +4,7 @@ from pygame.locals import *
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+GREY = (169, 169, 169)
 BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
@@ -17,11 +18,15 @@ COLORS = {
     4: ORANGE
 }
 
-BACKGROUND_COLOR = BLACK
+BACKGROUND_COLOR = GREY
+GRID_BACKGROUND_COLOR = BLACK
 CELL_COLOR = WHITE
 ACTIVE_CELL_COLOR = GREEN
 
 MARGIN = 5
+
+def button_clicked():
+    print("Clicked button")
 
 class PathUI():
 
@@ -32,7 +37,7 @@ class PathUI():
         self.cell_size = cell_size
 
         self._running = True
-        self._display_surf = pg.display.set_mode((self.width, self.height), pg.HWSURFACE)
+        self._display_surf = pg.display.set_mode((self.width + 300, self.height), pg.HWSURFACE)
 
         pg.init()
 
@@ -96,7 +101,11 @@ class PathUI():
 
     def render(self):
         self._display_surf.fill(BACKGROUND_COLOR)
+        pg.draw.rect(self._display_surf, GRID_BACKGROUND_COLOR,
+            pg.Rect(0, 0, (len(self.board.board) * (self.cell_size + MARGIN)) + MARGIN, 
+                (len(self.board.board[0]) * (self.cell_size + MARGIN)) + MARGIN))
         self.draw_grid()
+        self.draw_button("Find Path", (self.width+200, self.height // 2))
         pg.display.flip()
 
     def on_cleanup(self):
@@ -108,4 +117,38 @@ class PathUI():
             for event in pg.event.get():
                 self.handle_event(event) 
         self.on_cleanup()
+
+    def draw_button(self, txt, location, size=(80, 50)):
+        self.button = pg.Rect(location[0], location[1], size[0], size[1])
+        pg.draw.rect(self._display_surf, RED, self.button)
+
+
+class Button():
+    def __init__(self, txt, location, action, display, bg=RED, fg=BLUE, size=(80, 30), font_name="Segoe Print", font_size=16):
+        self.bg = bg  # actual background color, can change on mouseover
+        self.fg = fg  # text color
+        self.size = size
+        self.screen = display
+
+        self.font = pg.font.SysFont(font_name, font_size)
+        self.txt = txt
+        self.txt_surf = self.font.render(self.txt, 1, self.fg)
+        self.txt_rect = self.txt_surf.get_rect(center=[s//2 for s in self.size])
+
+        self.surface = pg.surface.Surface(size)
+        self.rect = pg.Rect(location[0], location[1], size[0], size[1])
+
+        self.call_back_ = action
+
+    def draw(self):
+
+        self.screen.draw(self.rect)
+        self.screen.draw(self.txt_rect)
+
+        """ self.surface.fill(self.bg)
+        self.surface.blit(self.txt_surf, self.txt_rect)
+        self.screen.blit(self.surface, self.rect) """
+
+    def call_back(self):
+        self.call_back_()
     
