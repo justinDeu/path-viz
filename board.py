@@ -8,6 +8,7 @@ class Board():
         2 - the start point
         3 - the end point 
         4 - an explored location
+        5 - path
     """
 
     def __init__(self, width, height):
@@ -45,6 +46,14 @@ class Board():
             self._end = (x, y)
         
         self._startTracker = self._startTracker * -1
+
+    def set_path(self, path):
+        """
+        Sets the list of points contained in the path as the path
+        in the array 
+        """
+        for points in path:
+            self._board[points[0]][points[1]] = 5
     
     def state(self, x, y):
         """Returns the current state of the given location"""

@@ -19,6 +19,7 @@ class Algo():
         self._board = board
         self._start = board.start()
         self._end = board.end()
+        self._path = []
     
     def step(self) -> (int, int):
         """Advances the algorithm through one iteration exploring one 
@@ -36,3 +37,6 @@ class Algo():
             False - path has not been found 
         """
         pass
+    
+    def set_path(self):
+        self._board.set_path(self._path)

@@ -26,6 +26,7 @@ class Cheat(Algo):
         
         self._update_curr(x_offset, y_offset)
         self._board.explore(self._curr[0], self._curr[1])
+        self._path.append(self._curr)
         return self._curr
             
             

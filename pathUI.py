@@ -11,13 +11,15 @@ BLUE = (0, 0, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 ORANGE = (255, 165, 0)
+RUST = (139, 64, 0)
 
 COLORS = {
     0: WHITE,
     1: GREEN,
     2: BLUE,
     3: RED,
-    4: ORANGE
+    4: ORANGE,
+    5: RUST
 }
 
 BACKGROUND_COLOR = GREY
@@ -139,6 +141,9 @@ class PathUI():
             algo.step()
             self.render()
             pg.time.delay(TIME_DELAY)
+        
+        algo.set_path()
+        self.render()
     
     def reset(self):
         self.board = Board(self.width // self.cell_size, self.height // self.cell_size)
