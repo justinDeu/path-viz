@@ -10,7 +10,8 @@ class BruteForce(Algo):
 
     def __init__(self, board):
         super().__init__(board)
-        self._nodes = [self._board.start()]    # list of tuples representing the points visited 
+        self._nodes = []    # list of tuples representing the points visited 
+        self._add_nearby_cells(self._board.start())
 
     def step(self):
         """Advances the algorithm one step closer to the end"""
@@ -32,12 +33,12 @@ class BruteForce(Algo):
 
         Will not add if the point is already in the list or it is a wall
         """
-        offsets = (-1, 1)
+        offsets = (-1, 0, 1)
         (x_pos, y_pos) = point
 
         for x_off in offsets:
             for y_off in offsets:
-                if x_pos + x_off >= 0 and x_pos + x_off < self._board.width() and y_pos + y_off >= 0 and y_pos + y_off < self._board.height():
+                if (x_pos + x_off, y_pos + y_off) != point and self._valid_point(point):
                     self._add_cell((x_pos + x_off, y_pos + y_off))
 
 
@@ -46,8 +47,12 @@ class BruteForce(Algo):
         Adds the cell, given as a tuple, to the list if it is not and it
         is not a wall.
         """
-        if self._board.state(cell[0], cell[1]) != 1 and cell not in self._nodes:
+        if self._board.state(cell[0], cell[1]) != 1 and cell != self._start and cell not in self._nodes:
             self._nodes.append(cell) 
 
+    def _valid_point(self, point):
+        (x, y) = point
+        return x >= 0 and x < self._board.width() and y >= 0 and y < self._board.height()
 
+    
     
