@@ -28,7 +28,7 @@ class Algo():
         """
         pass
     
-    def solved(self) -> bool:
+    def running(self) -> bool:
         """
         Returns a boolean value of whether the algorith has found a
         

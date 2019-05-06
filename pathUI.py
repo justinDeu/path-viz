@@ -1,6 +1,8 @@
 from board import Board 
 import pygame as pg
 from pygame.locals import *
+from algo import Algo
+from cheat import Cheat
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -21,9 +23,10 @@ COLORS = {
 BACKGROUND_COLOR = GREY
 GRID_BACKGROUND_COLOR = BLACK
 CELL_COLOR = WHITE
-ACTIVE_CELL_COLOR = GREEN
 
 MARGIN = 5
+
+TIME_DELAY = 500
 
 class PathUI():
 
@@ -131,7 +134,11 @@ class PathUI():
         return btn
     
     def run_button_clicked(self):
-        print("Searching for path.....")
+        algo = Cheat(self.board)
+        while(algo.running() == False):
+            algo.step()
+            self.render()
+            pg.time.delay(TIME_DELAY)
     
     def reset(self):
         self.board = Board(self.width // self.cell_size, self.height // self.cell_size)
