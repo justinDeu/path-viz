@@ -61,3 +61,11 @@ class Board():
     def height(self):
         """Returns the board's height"""
         return self._height
+
+    def start(self):
+        """Returns the board's start position"""
+        return self._start
+
+    def end(self):
+        """Returns the end's start position"""
+        return self._end

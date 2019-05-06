@@ -7,8 +7,8 @@ Through this project, I was able to learn more about different algorthims we dis
 In the future, I hope to expand the program to show more information and also explore further concepts within graph theory.
 
 ### To-Do List
-* Add reset button
-* Refactor board class to make access through functions
+* ~~Add reset button~~
+* ~~Refactor board class to make access through functions~~
 * Implement algo base class
     * constructor takes board to operate on
     * public step function advances through one iteration of algorithm
