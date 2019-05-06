@@ -16,3 +16,8 @@ In the future, I hope to expand the program to show more information and also ex
     * actual algorithms use private functions called within step
 * Implement Djikstra's algorithm
 * Implement Error when path is impossible 
+* Add error handling for exploring/ making wall in invalid location
+    * Can't explore a wall
+    * Can't make start/end a wall 
+    * Can't explore an already explored location
+

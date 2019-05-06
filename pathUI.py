@@ -45,9 +45,9 @@ class PathUI():
 
     def init_rects(self):
         rects = []
-        for row in range(self.board.height):
+        for row in range(self.board.height()):
             rects.append([])
-            for col in range(self.board.width):
+            for col in range(self.board.width()):
                 rect = pg.Rect((self.cell_size + MARGIN) * col + MARGIN,
                                (self.cell_size + MARGIN) * row + MARGIN, 
                                 self.cell_size,
@@ -59,7 +59,7 @@ class PathUI():
     def draw_grid(self):
         for i, row in enumerate(self.rects):
             for j, rect in enumerate(row):
-                pg.draw.rect(self._display_surf, self._color(self.board.board[i][j]), rect)
+                pg.draw.rect(self._display_surf, self._color(self.board.state(i, j)), rect)
 
 
     def handle_event(self, event):
@@ -77,14 +77,14 @@ class PathUI():
                 for i, row in enumerate(self.rects):
                     for j, rect in enumerate(row):
                         if rect.collidepoint(event.pos):
-                            self.board.toggle(i, j)
+                            self.board.toggle_wall(i, j)
                             self.render()
                             return
             elif event.button == 3:
                 for i, row in enumerate(self.rects):
                     for j, rect in enumerate(row):
                         if rect.collidepoint(event.pos):
-                            self.board.setStartEnd(i, j)
+                            self.board.set_start_end(i, j)
                             self.render()
                             return
             return
@@ -92,8 +92,8 @@ class PathUI():
         elif event.type == pg.MOUSEMOTION and pg.mouse.get_pressed()[0]:
             for i, row in enumerate(self.rects):
                 for j, rect in enumerate(row):
-                    if rect.collidepoint(event.pos) and self.board.board[i][j] != 1:
-                        self.board.toggle(i, j)
+                    if rect.collidepoint(event.pos) and self.board.state(i, j) != 1:
+                        self.board.toggle_wall(i, j)
                         self.render()
                         return
 
@@ -105,8 +105,8 @@ class PathUI():
     def render(self):
         self._display_surf.fill(BACKGROUND_COLOR)
         pg.draw.rect(self._display_surf, GRID_BACKGROUND_COLOR,
-            pg.Rect(0, 0, (len(self.board.board) * (self.cell_size + MARGIN)) + MARGIN, 
-                (len(self.board.board[0]) * (self.cell_size + MARGIN)) + MARGIN))
+            pg.Rect(0, 0, (self.board.width() * (self.cell_size + MARGIN)) + MARGIN, 
+                (self.board.height() * (self.cell_size + MARGIN)) + MARGIN))
         self.draw_grid()
         self.run_btn = self.draw_button("Run Search", (self.width+200, self.height // 2))
         self.reset_btn = self.draw_button("Reset", (self.width + 200, (self.height // 2) + 80))
@@ -136,4 +136,3 @@ class PathUI():
     def reset(self):
         self.board = Board(self.width // self.cell_size, self.height // self.cell_size)
         self.render()
-    
