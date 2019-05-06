@@ -6,7 +6,6 @@ CELL_SIZE = 15
 MARGIN = 5
 
 if __name__ == "__main__":
-    algo = None
     board = Board(WIDTH // CELL_SIZE, HEIGHT // CELL_SIZE)
     ui = PathUI(board, WIDTH, HEIGHT, CELL_SIZE)
     ui.execute()
