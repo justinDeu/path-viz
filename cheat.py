@@ -37,7 +37,7 @@ class Cheat(Algo):
         in its cheating manner 
         """
         (next_x, next_y) = self._next_move()
-        return self._curr[0] + next_x == self._end[0] and self._curr[1] + next_y == self._end[1]
+        return not (self._curr[0] + next_x == self._end[0] and self._curr[1] + next_y == self._end[1])
         
 
     def _update_curr(self, x, y):

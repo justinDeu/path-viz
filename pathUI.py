@@ -3,6 +3,7 @@ import pygame as pg
 from pygame.locals import *
 from algo import Algo
 from cheat import Cheat
+from brute import BruteForce
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -137,7 +138,7 @@ class PathUI():
     
     def run_button_clicked(self):
         algo = Cheat(self.board)
-        while(algo.running() == False):
+        while(algo.running()):
             algo.step()
             self.render()
             pg.time.delay(TIME_DELAY)

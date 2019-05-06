@@ -76,5 +76,5 @@ class Board():
         return self._start
 
     def end(self):
-        """Returns the end's start position"""
+        """Returns the board's end position"""
         return self._end
