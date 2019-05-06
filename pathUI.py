@@ -68,8 +68,11 @@ class PathUI():
             return
         elif event.type == pg.MOUSEBUTTONDOWN:
             if event.button == 1:
-                if self.run_button.collidepoint(event.pos):
+                if self.run_btn.collidepoint(event.pos):
                     self.run_button_clicked()
+                    return
+                if self.reset_btn.collidepoint(event.pos):
+                    self.reset()
                     return
                 for i, row in enumerate(self.rects):
                     for j, rect in enumerate(row):
@@ -105,7 +108,8 @@ class PathUI():
             pg.Rect(0, 0, (len(self.board.board) * (self.cell_size + MARGIN)) + MARGIN, 
                 (len(self.board.board[0]) * (self.cell_size + MARGIN)) + MARGIN))
         self.draw_grid()
-        self.draw_button("Run Search", (self.width+200, self.height // 2))
+        self.run_btn = self.draw_button("Run Search", (self.width+200, self.height // 2))
+        self.reset_btn = self.draw_button("Reset", (self.width + 200, (self.height // 2) + 80))
         pg.display.flip()
 
     def on_cleanup(self):
@@ -121,40 +125,15 @@ class PathUI():
     def draw_button(self, txt, location, size=(80, 50)):
         text = pg.font.SysFont('Arial', 15)
         txt_surf = text.render(txt, False, BLACK)
-        self.run_button = pg.Rect(location[0], location[1], size[0], size[1])
-        pg.draw.rect(self._display_surf, RED, self.run_button)
+        btn = pg.Rect(location[0], location[1], size[0], size[1])
+        pg.draw.rect(self._display_surf, RED, btn)
         self._display_surf.blit(txt_surf, location)
+        return btn
     
     def run_button_clicked(self):
         print("Searching for path.....")
-
-
-class Button():
-    def __init__(self, txt, location, action, display, bg=RED, fg=BLUE, size=(80, 30), font_name="Segoe Print", font_size=16):
-        self.bg = bg  # actual background color, can change on mouseover
-        self.fg = fg  # text color
-        self.size = size
-        self.screen = display
-
-        self.font = pg.font.SysFont(font_name, font_size)
-        self.txt = txt
-        self.txt_surf = self.font.render(self.txt, 1, self.fg)
-        self.txt_rect = self.txt_surf.get_rect(center=[s//2 for s in self.size])
-
-        self.surface = pg.surface.Surface(size)
-        self.rect = pg.Rect(location[0], location[1], size[0], size[1])
-
-        self.call_back_ = action
-
-    def draw(self):
-
-        self.screen.draw(self.rect)
-        self.screen.draw(self.txt_rect)
-
-        """ self.surface.fill(self.bg)
-        self.surface.blit(self.txt_surf, self.txt_rect)
-        self.screen.blit(self.surface, self.rect) """
-
-    def call_back(self):
-        self.call_back_()
+    
+    def reset(self):
+        self.board = Board(self.width // self.cell_size, self.height // self.cell_size)
+        self.render()
     
