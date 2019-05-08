@@ -8,6 +8,6 @@ MARGIN = 5
 if __name__ == "__main__":
 
     board = Board(WIDTH // CELL_SIZE, HEIGHT // CELL_SIZE)
-    ui = PathUI(board, WIDTH, HEIGHT, CELL_SIZE)
+    ui = PathUI(board, WIDTH, HEIGHT + 200, CELL_SIZE)
     ui.execute()
     
