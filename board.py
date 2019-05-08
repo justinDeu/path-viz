@@ -52,8 +52,9 @@ class Board():
         Sets the list of points contained in the path as the path
         in the array 
         """
-        for points in path:
-            self._board[points[0]][points[1]] = 5
+        for point in path:
+            if self._board[point[0]][point[1]] == 4:
+                self._board[point[0]][point[1]] = 5
     
     def state(self, x, y):
         """Returns the current state of the given location"""
@@ -61,7 +62,8 @@ class Board():
 
     def explore(self, x, y):
         """Markes the given location as explored"""
-        self._board[x][y] = 4
+        if self._board[x][y] == 0:
+            self._board[x][y] = 4
 
     def width(self):
         """Returns the board's width"""
