@@ -3,6 +3,8 @@ import pygame as pg
 from pygame.locals import *
 from algo import Algo
 from cheat import Cheat
+from brute import BruteForce
+from astar2 import AStar2
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -28,7 +30,7 @@ CELL_COLOR = WHITE
 
 MARGIN = 5
 
-TIME_DELAY = 500
+TIME_DELAY = 100
 
 class PathUI():
 
@@ -47,6 +49,7 @@ class PathUI():
         self.init_rects()
         self.render()
         self._running = True
+
 
     def init_rects(self):
         rects = []
@@ -136,8 +139,8 @@ class PathUI():
         return btn
     
     def run_button_clicked(self):
-        algo = Cheat(self.board)
-        while(algo.running() == False):
+        algo = AStar2(self.board)
+        while(algo.running()):
             algo.step()
             self.render()
             pg.time.delay(TIME_DELAY)

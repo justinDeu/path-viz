@@ -37,6 +37,9 @@ class Algo():
             False - path has not been found 
         """
         pass
-    
+
     def set_path(self):
-        self._board.set_path(self._path)
+        """
+        Sets the path found on the board, should call board.set_path
+        """
+        pass

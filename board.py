@@ -27,22 +27,22 @@ class Board():
         
         Returns the new state of the cell
         """
-        if self._board[x][y] == 0:
-            self._board[x][y] = 1
-        elif self._board[x][y] == 1:
-            self._board[x][y] = 0
+        if self._board[y][x] == 0:
+            self._board[y][x] = 1
+        elif self._board[y][x] == 1:
+            self._board[y][x] = 0
 
-        return self._board[x][y]
+        return self._board[y][x]
 
     def set_start_end(self, x, y):
         """Toggles the given location as the new start/end point"""
         if self._startTracker == 1:
-            self._board[x][y] = 2
-            self._board[self._start[0]][self._start[1]] = 0
+            self._board[y][x] = 2
+            self._board[self._start[1]][self._start[0]] = 0
             self._start = (x, y)
         else:
-            self._board[x][y] = 3
-            self._board[self._end[0]][self._end[1]] = 0
+            self._board[y][x] = 3
+            self._board[self._end[1]][self._end[0]] = 0
             self._end = (x, y)
         
         self._startTracker = self._startTracker * -1
@@ -52,16 +52,18 @@ class Board():
         Sets the list of points contained in the path as the path
         in the array 
         """
-        for points in path:
-            self._board[points[0]][points[1]] = 5
+        for point in path:
+            if self._board[point[1]][point[0]] == 4:
+                self._board[point[1]][point[0]] = 5
     
     def state(self, x, y):
         """Returns the current state of the given location"""
-        return self._board[x][y]
+        return self._board[y][x]
 
     def explore(self, x, y):
         """Markes the given location as explored"""
-        self._board[x][y] = 4
+        if self._board[y][x] == 0:
+            self._board[y][x] = 4
 
     def width(self):
         """Returns the board's width"""
@@ -76,5 +78,5 @@ class Board():
         return self._start
 
     def end(self):
-        """Returns the end's start position"""
+        """Returns the board's end position"""
         return self._end
